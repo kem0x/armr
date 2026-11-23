@@ -1,3 +1,5 @@
+<p align="center"><img src="docs/media/banner.png" alt="ARMR: Android games, running natively on Windows"></p>
+
 # ARMR
 
 **Run Android games natively on Windows. No emulator, no VM, no Android image.**
@@ -68,6 +70,8 @@ script that drives its lifecycle. Details: [docs/ARCHITECTURE.md](docs/ARCHITECT
 
    In the game window, Alt (or the right edge) reveals the toolbar. F11
    toggles fullscreen.
+
+   <img src="docs/media/launcher.png" alt="The ARMR launcher listing Candy Crush Saga, Cut the Rope, and Plants vs. Zombies FREE with their status" width="720">
 
 ## Limitations
 
