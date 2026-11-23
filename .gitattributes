@@ -1,0 +1,5 @@
+* text=auto
+# Patches must keep the upstream source's LF endings to apply cleanly.
+*.patch text eol=lf
+*.ps1 text eol=crlf
+*.cmd text eol=crlf

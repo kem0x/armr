@@ -1,0 +1,90 @@
+# PvZ1 compat policy: kind|class|method|signature|value
+# kind in: void static-void boolean static-boolean int static-int
+#          long static-long float double string static-string
+#          object static-object array static-array
+# empty field or '*' = wildcard; trailing '*' = prefix match.
+# value semantics by kind: boolean true/false; int/long integer;
+# float/double number; string text; object/array element type.
+
+# --- Glu platform services (csdk) ---
+void|csdk/glucentralservices/util/AndroidPlatform|registerApplicationEvent|()V|
+int|csdk/glucentralservices/util/AndroidPlatform|getDeviceTier|()I|3
+int|csdk/glucentralservices/util/AndroidPlatform|getCpuCoreCount|()I|8
+double|csdk/glucentralservices/util/AndroidPlatform|getRamAmount|()D|8589934592
+boolean|csdk/glucentralservices/util/AndroidPlatform|checkPrivateDirectoryExists|(Ljava/lang/String;Z)Z|true
+string|csdk/glucentralservices/util/AndroidPlatform|privateFilePath|()Ljava/lang/String;|/data/private
+string|csdk/glucentralservices/util/AndroidPlatform|getPackageName|()Ljava/lang/String;|com.ea.game.pvzfree_row
+# object factories return compat typed objects of the advertised type
+object|csdk/glu*|create*|(Ljava/lang/String;Ljava/util/Map;)*|
+
+# --- Nimble bridge ---
+void|com.ea.nimble.Utility|registerReceiver|(Ljava/lang/String;Landroid/content/BroadcastReceiver;)V|
+boolean|com.ea.nimble.ISynergyEnvironment|isDataAvailable|()Z|false
+
+# --- blast delegates / display ---
+void|com/ea/blast/ViewAndroidDelegate|SetViewFrame|*|
+void|com/ea/blast/NotificationAndroid|*|*|
+boolean|com/ea/blast/DisplayAndroidDelegate|*|*|0
+int|com/ea/blast/DisplayAndroidDelegate|GetStdOrientation|()I|2
+int|com/ea/blast/DisplayAndroidDelegate|GetCurrentWidth|()I|1280
+int|com/ea/blast/DisplayAndroidDelegate|GetCurrentHeight|()I|720
+float|com/ea/blast/DisplayAndroidDelegate|GetDpi*|()F|160
+# The runtime synthesizes one touchscreen (Win32 pointer input feeds it), so
+# advertise it before the generic zero-count fallback. Without this the
+# TouchScreen module is never created and all pointer input is dropped.
+int|com/ea/blast/SystemAndroidDelegate|GetTouchScreenCount|()I|1
+int|com/ea/blast/SystemAndroidDelegate|Get*Count|()I|0
+int|com/ea/blast/SystemAndroidDelegate|GetApplicationVersionCode|()I|40200
+string|com/ea/blast/SystemAndroidDelegate|GetApplicationVersion|()Ljava/lang/String;|4.0.2
+string|com/ea/blast/SystemAndroidDelegate|GetChipset|()Ljava/lang/String;|Qualcomm MSM8998
+string|com/ea/blast/SystemAndroidDelegate|GetFirmware|()Ljava/lang/String;|9
+string|com/ea/blast/SystemAndroidDelegate|GetManufacturer|()Ljava/lang/String;|Google
+string|com/ea/blast/SystemAndroidDelegate|GetDeviceModel|()Ljava/lang/String;|Pixel 2
+string|com/ea/blast/SystemAndroidDelegate|GetDeviceName|()Ljava/lang/String;|Pixel 2
+string|com/ea/blast/SystemAndroidDelegate|GetHardwareFloatingPointSupport|()Ljava/lang/String;|true
+string|com/ea/blast/SystemAndroidDelegate|GetApiLevel|()Ljava/lang/String;|28
+string|com/ea/blast/SystemAndroidDelegate|GetPlatformVersion|()Ljava/lang/String;|9
+string|com/ea/blast/SystemAndroidDelegate|GetProcessorArchitecture|()Ljava/lang/String;|arm64-v8a
+string|com/ea/blast/SystemAndroidDelegate|GetLanguage|()Ljava/lang/String;|en
+string|com/ea/blast/SystemAndroidDelegate|GetLocale|()Ljava/lang/String;|en-US
+# Physical keyboard is present on the Windows host; report it so the field
+# routes real key events instead of parking on the virtual keyboard. The
+# delegate's own IsVisible must also read true once the field is focused, or
+# the engine keeps buffering keystrokes for a keyboard it thinks is closed.
+boolean|com/ea/blast/VirtualKeyboardAndroidDelegate|IsPhysicalKeyboardVisible|()Z|true
+boolean|com/ea/blast/VirtualKeyboardAndroidDelegate|IsPhysicalKeyboardPresent|()Z|true
+boolean|com/ea/blast/VirtualKeyboardAndroidDelegate|IsVisible|()Z|true
+boolean|com/ea/blast/KeyboardAndroid|IsPhysicalKeyboardVisible|()Z|true
+boolean|com/ea/blast/KeyboardAndroid|IsPhysicalKeyboardPresent|()Z|true
+boolean|com/ea/blast/KeyboardAndroid|IsVisible|()Z|true
+boolean|com/ea/blast/*|Is*|()Z|false
+boolean|com/ea/blast/*|Has*|()Z|false
+void|com/ea/blast/*|SetEnabled|(Z)V|
+void|com/ea/blast/*|UserSetVisible|(Z)V|
+void|com/ea/blast/DeviceOrientationHandlerAndroidDelegate|OnLifeCycleFocus*|()V|
+
+# --- Cocos2dx downloader (no HTTP transport) ---
+object|org/cocos2dx/lib/Cocos2dxDownloader|createDownloader|*|Lorg/cocos2dx/lib/Cocos2dxDownloader;
+void|org/cocos2dx/lib/Cocos2dxDownloader|createTask|*|
+
+# --- Misc ---
+void|com/ea/game/pvzfree_row/CrashlyticsBridge|*|*|
+void|com/ea/game/pvzfree_row/AppShortcutUtil|*|*|
+int|com/ea/EAMIO/StorageDirectory|GetPrimaryExternalStorageState|()I|1
+string|com/ea/EAMIO/StorageDirectory|GetPrimaryExternalStorageDirectory|()Ljava/lang/String;|/data/external
+object|*|readProperties|(Ljava/lang/String;[Ljava/lang/String;)*|[Ljava/lang/String;
+
+
+# --- Network: offline synthetic handle for INetwork.sendGetRequest ---
+object|com.ea.nimble.INetwork|sendGetRequest|(Ljava/net/URL;Ljava/util/HashMap;Lcom/ea/nimble/NetworkConnectionCallback;)*|Lcom/ea/nimble/NetworkConnectionHandle;
+void|com/ea/game/pvzfree_row/PvZActivity|DownLoadFileFromURL|*|
+boolean|com/ea/game/pvzfree_row/PvZActivity|IsUserMusicPlaying|()Z|false
+string|com.ea.nimble.ISynergyIdManager|getSynergyId|()Ljava/lang/String;|00000000-0000-0000-0000-000000000000
+void|com/ea/blast/PowerManagerAndroid|*|*|
+void|csdk/glucentralservices/util/AndroidPlatform|showConsent|(JJLandroid/app/Activity;Ljava/lang/String;)V|
+void|csdk/glucentralservices/util/AndroidPlatform|showWebView|(JLandroid/app/Activity;Ljava/lang/String;Ljava/lang/String;)V|
+
+# Nimble application configuration: no config values are provisioned in
+# the compat runtime, so lookups report absent and callers use defaults.
+boolean|com.ea.nimble.NimbleApplicationConfiguration|configValueExists|(Ljava/lang/String;)Z|false
+boolean|com.popcap.SexyAppFramework.SexyAppFrameworkActivity|getHasCrashReport|()Z|false

@@ -1,0 +1,35 @@
+# Game packages, extracted payloads, and save data never go in git.
+/apps/
+*.apk
+*.xapk
+*.apks
+*.obb
+
+# Run logs, traces, and frame captures stay local.
+/logs/
+.runtime/
+*.bmp
+
+# Build outputs
+build/
+*.exe
+*.dll
+*.pdb
+*.obj
+*.lib
+*.exp
+
+# Pinned third-party sources (see docs/BUILDING.md)
+native-runtime/win/third_party/dynarmic/
+native-runtime/win/third_party/libwebp-1.0.3/
+native-runtime/win/third_party/rapidjson-1.1.0/
+
+# Editor and OS clutter
+.vs/
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+__pycache__/
+*.pyc
+nul

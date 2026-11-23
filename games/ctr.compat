@@ -1,0 +1,12 @@
+# CTR compat overrides: android/view/Display values the Swappy/Unity frame
+# pacer needs. getRefreshRate must be nonzero or the frame interval is 0 and
+# the pacer's deadline catch-up loop spins forever.
+float|android/view/Display|getRefreshRate|()F|60.0
+long|android/view/Display|getAppVsyncOffsetNanos|()J|0
+long|android/view/Display|getPresentationDeadlineNanos|()J|16666666
+int|android/view/Display|getRotation|()I|0
+int|android/view/Display|getWidth|()I|1280
+int|android/view/Display|getHeight|()I|720
+int|android/view/Display|getDisplayId|()I|0
+boolean|android/view/Display|isWideColorGamut|()Z|false
+int|com/unity3d/player/UnityPlayer|getNetworkConnectivity|()I|2
