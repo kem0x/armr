@@ -3,7 +3,7 @@
 # Select with: ArmrCtrEntryProbe.exe --game ctr
 id = ctr
 name = Cut the Rope
-desc = Unity/il2cpp engine - experimental
+desc = Boots only (loading takes hours)
 driver = unity
 payload_dir = apps/ctr/payload
 data_dir = apps/ctr/data

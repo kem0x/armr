@@ -15,7 +15,7 @@
 
 id = candy-crush
 name = Candy Crush Saga
-desc = King match-3 — dedicated L1 entry probe
+desc = Playable, with hitches
 exe = ArmrCandyEntryProbe.exe
 payload_dir = {localappdata}/Armr/apps/com.king.candycrushsaga/payload
 data_dir = {localappdata}/Armr/apps/com.king.candycrushsaga/data

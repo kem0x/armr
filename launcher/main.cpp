@@ -625,8 +625,11 @@ int WINAPI wWinMain(HINSTANCE inst, HINSTANCE, LPWSTR, int) {
         if (g) {
             ImGui::Text("%s", g->name.c_str());
             ImGui::SameLine();
-            ImGui::TextDisabled("id=%s  driver=%s  lib=%s", g->id.c_str(),
-                                g->driver.c_str(), g->root_lib.c_str());
+            ImGui::TextDisabled("id=%s  %s=%s  lib=%s", g->id.c_str(),
+                                g->driver.empty() ? "host" : "driver",
+                                g->driver.empty() ? g->exe.c_str()
+                                                  : g->driver.c_str(),
+                                g->root_lib.c_str());
             if (!g->staged) {
                 ImGui::TextColored(ImVec4(0.95f, 0.55f, 0.66f, 1.0f),
                                    "Not imported. Run: windows\\Import-ArmrGame.ps1 "
@@ -640,7 +643,9 @@ int WINAPI wWinMain(HINSTANCE inst, HINSTANCE, LPWSTR, int) {
         ImGui::InputText("Render timeout", timeout_buf, sizeof(timeout_buf),
                          ImGuiInputTextFlags_CharsDecimal);
         ImGui::SameLine();
-        ImGui::SetNextItemWidth(-1);
+        // Leave room for the label to the right of the field.
+        ImGui::SetNextItemWidth(-(ImGui::CalcTextSize("Extra probe args").x +
+                                  ImGui::GetStyle().ItemInnerSpacing.x + 4.0f));
         ImGui::InputText("Extra probe args", args_buf, sizeof(args_buf));
 
         const bool running = child.running_.load();

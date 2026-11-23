@@ -2,7 +2,7 @@
 # Select with: ArmrCtrEntryProbe.exe --game pvz1
 id = pvz1
 name = Plants vs. Zombies FREE
-desc = PopCap Sexy/Lawn tower defense - playable
+desc = Playable, slowly (first load ~6 min)
 driver = pvz
 payload_dir = apps/pvz1/payload
 data_dir = apps/pvz1/data
