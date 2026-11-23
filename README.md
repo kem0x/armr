@@ -26,6 +26,11 @@ OpenGL ES, audio, files, and input.
 All games run **without sound** and need their `arm64-v8a` build. A game
 uses several CPU cores while it runs; run one at a time.
 
+<p align="center">
+  <img src="docs/media/pvz.png" alt="Plants vs. Zombies FREE running in ARMR on Windows" width="49%">
+  <img src="docs/media/candy-crush.png" alt="Candy Crush Saga running in ARMR on Windows" width="49%">
+</p>
+
 ## How it works
 
 ```text

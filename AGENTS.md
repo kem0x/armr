@@ -10,6 +10,8 @@ Read `README.md` and `docs/ARCHITECTURE.md` first.
   remote rendering helper.
 - Game files never enter git or a hosted model: packages, extracted payloads,
   saves, logs, traces, and captures stay local (see `docs/SECURITY.md`).
+  The only exception is maintainer-approved README screenshots in
+  `docs/media/`.
   Payload-dependent steps run locally.
 - Keep the runtime game-agnostic. Per-game behavior belongs in `games/`
   (profile, `.compat`, Lua script, sites table). Exact-version fast paths
